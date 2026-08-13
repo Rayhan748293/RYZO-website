@@ -6,5 +6,13 @@
     "currency": "BDT",
     "image": "https://i.postimg.cc/02yQLYHv/ebb655223ca51df2f588a7c40ac21f57.jpg",
     "description": "Powerful bass, 60 hours playtime"
+  },
+  {
+    "id": 2,
+    "name": "Earbud's",
+    "price": 1500,
+    "currency": "BDT",
+    "image": "https://i.postimg.cc/02yQLYHv/ebb655223ca51df2f588a7c40ac21f57.jpg",
+    "description": "Powerful bass, 60 hours playtime"
   }
 ]
