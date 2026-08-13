@@ -1,467 +1,126 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RAYZO - প্রতিদিনের প্রয়োজন এক জায়গায়</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
-}
+/* Basic reset & typography */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
+body{background:#f5f6f8;color:#222;line-height:1.35}
+a{color:inherit}
 
-body{
-  background:#f5f6f8;
-  color:#222;
-}
+/* Prevent body scroll when modal/cart open */
+body.no-scroll{height:100%;overflow:hidden}
 
 /* HEADER */
-header{
-  background:#111;
-  color:white;
-  padding:14px 16px;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.top-bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo h1{
-  font-size:25px;
-  letter-spacing:2px;
-}
-
-.logo p{
-  font-size:11px;
-  color:#ddd;
-  margin-top:3px;
-}
-
-.cart-icon{
-  font-size:25px;
-  cursor:pointer;
-  position:relative;
-  background:transparent;
-  border:none;
-  padding:0;
-}
-
-#cart-count{
-  position:absolute;
-  top:-9px;
-  right:-10px;
-  background:#ff3b30;
-  color:white;
-  border-radius:50%;
-  font-size:11px;
-  padding:3px 6px;
-}
+header{background:#111;color:white;padding:14px 16px;position:sticky;top:0;z-index:100}
+.top-bar{display:flex;justify-content:space-between;align-items:center}
+.logo h1{font-size:25px;letter-spacing:2px}
+.logo p{font-size:11px;color:#ddd;margin-top:3px}
+.cart-icon{font-size:25px;cursor:pointer;position:relative;background:transparent;border:none;padding:0}
+#cart-count{position:absolute;top:-9px;right:-10px;background:#ff3b30;color:white;border-radius:50%;font-size:11px;padding:3px 6px}
 
 /* SEARCH */
-.search-bar{
-  padding:12px;
-  background:white;
-  position:sticky;
-  top:68px;
-  z-index:90;
-}
-
-.search-bar input{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  outline:none;
-  font-size:14px;
-}
+.search-bar{padding:12px;background:white;position:sticky;top:68px;z-index:90}
+.search-bar input{width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:10px;outline:none;font-size:14px}
 
 /* BANNER */
-.banner{
-  margin:12px;
-  padding:25px 15px;
-  border-radius:14px;
-  text-align:center;
-  color:white;
-  background:linear-gradient(120deg,#ff512f,#f09819);
-}
-
-.banner h2{
-  font-size:23px;
-  margin-bottom:7px;
-}
-
-.banner p{
-  font-size:13px;
-}
+.banner{margin:12px;padding:25px 15px;border-radius:14px;text-align:center;color:white;background:linear-gradient(120deg,#ff512f,#f09819)}
+.banner h2{font-size:23px;margin-bottom:7px}
+.banner p{font-size:13px}
 
 /* CATEGORY */
-.category{
-  display:flex;
-  gap:9px;
-  overflow-x:auto;
-  padding:5px 12px 14px;
-  background:#f5f6f8;
-}
-
-.category::-webkit-scrollbar{
-  display:none;
-}
-
-.cat-item{
-  white-space:nowrap;
-  padding:9px 15px;
-  background:white;
-  border:1px solid #ddd;
-  border-radius:20px;
-  font-size:13px;
-  cursor:pointer;
-}
-
-.cat-item.active{
-  background:#ff5722;
-  color:white;
-  border-color:#ff5722;
-}
+.category{display:flex;gap:9px;overflow-x:auto;padding:5px 12px 14px;background:#f5f6f8}
+.category::-webkit-scrollbar{display:none}
+.cat-item{white-space:nowrap;padding:9px 15px;background:white;border:1px solid #ddd;border-radius:20px;font-size:13px;cursor:pointer}
+.cat-item.active{background:#ff5722;color:white;border-color:#ff5722}
 
 /* PRODUCTS */
-.products{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  padding:12px;
-}
-
-.card{
-  background:white;
-  border-radius:13px;
-  padding:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-
-.card img{
-  width:100%;
-  height:145px;
-  object-fit:cover;
-  border-radius:9px;
-  background:#eee;
-}
-
-.card h3{
-  font-size:15px;
-  margin:9px 0 5px;
-}
-
-.card p{
-  font-size:12px;
-  color:#777;
-  min-height:30px;
-}
-
-.price{
-  color:#e91e63;
-  font-weight:bold;
-  font-size:17px;
-  margin-top:6px;
-}
-
-.old-price{
-  text-decoration:line-through;
-  color:#999;
-  font-size:12px;
-  margin-left:5px;
-}
-
-.btn{
-  background:#ff5722;
-  color:white;
-  border:none;
-  padding:10px;
-  width:100%;
-  border-radius:7px;
-  cursor:pointer;
-  margin-top:8px;
-  font-weight:bold;
-}
-
-.btn:active{
-  transform:scale(.98);
-}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+.card{background:white;border-radius:13px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card img{width:100%;height:145px;object-fit:cover;border-radius:9px;background:#eee}
+.card h3{font-size:15px;margin:9px 0 5px}
+.card p{font-size:12px;color:#777;min-height:30px}
+.price{color:#e91e63;font-weight:bold;font-size:17px;margin-top:6px}
+.old-price{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}
+.btn{background:#ff5722;color:white;border:none;padding:10px;width:100%;border-radius:7px;cursor:pointer;margin-top:8px;font-weight:bold}
+.btn:active{transform:scale(.98)}
 
 /* CART */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  display:none;
-  z-index:200;
-}
-
-.overlay.show{
-  display:block;
-}
-
-.cart-sidebar{
-  position:fixed;
-  right:-100%;
-  top:0;
-  width:92%;
-  max-width:420px;
-  height:100%;
-  background:white;
-  z-index:300;
-  transition:.3s;
-  padding:18px;
-  overflow-y:auto;
-}
-
-.cart-sidebar.open{
-  right:0;
-}
-
-.cart-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
-}
-
-.close-cart{
-  font-size:25px;
-  cursor:pointer;
-}
-
-.cart-item{
-  display:flex;
-  gap:10px;
-  border-bottom:1px solid #eee;
-  padding:12px 0;
-}
-
-.cart-item img{
-  width:65px;
-  height:65px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.cart-info{
-  flex:1;
-}
-
-.cart-info h4{
-  font-size:14px;
-}
-
-.qty{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:6px;
-}
-
-.qty button{
-  border:none;
-  background:#eee;
-  width:25px;
-  height:25px;
-  border-radius:5px;
-}
-
-.cart-total{
-  margin-top:18px;
-  padding-top:15px;
-  border-top:2px solid #eee;
-}
-
-.total-row{
-  display:flex;
-  justify-content:space-between;
-  margin:7px 0;
-}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:200}
+.overlay.show{display:block}
+.cart-sidebar{position:fixed;right:-100%;top:0;width:92%;max-width:420px;height:100%;background:white;z-index:300;transition:.28s;padding:18px;overflow-y:auto}
+.cart-sidebar.open{right:0}
+.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.close-cart{font-size:25px;cursor:pointer}
+.cart-item{display:flex;gap:10px;border-bottom:1px solid #eee;padding:12px 0}
+.cart-item img{width:65px;height:65px;object-fit:cover;border-radius:8px}
+.cart-info{flex:1}
+.cart-info h4{font-size:14px}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{border:none;background:#eee;width:25px;height:25px;border-radius:5px}
+.cart-total{margin-top:18px;padding-top:15px;border-top:2px solid #eee}
+.total-row{display:flex;justify-content:space-between;margin:7px 0}
 
 /* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:500;
-  justify-content:center;
-  align-items:center;
-  padding:15px;
-}
-
-.modal-content{
-  background:white;
-  width:100%;
-  max-width:420px;
-  border-radius:14px;
-  padding:20px;
-  max-height:90vh;
-  overflow-y:auto;
-}
-
-.modal-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:15px;
-}
-
-.modal-header span{
-  font-size:25px;
-  cursor:pointer;
-}
-
-.form-input{
-  width:100%;
-  padding:11px;
-  margin:6px 0 10px;
-  border:1px solid #ddd;
-  border-radius:7px;
-  outline:none;
-}
-
-textarea.form-input{
-  resize:none;
-}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;justify-content:center;align-items:center;padding:15px}
+.modal.show{display:flex}
+.modal-content{background:white;width:100%;max-width:420px;border-radius:14px;padding:20px;max-height:90vh;overflow-y:auto;outline:none}
+.modal-header{display:flex;justify-content:space-between;margin-bottom:15px}
+.modal-header span{font-size:25px;cursor:pointer}
+.form-input{width:100%;padding:11px;margin:6px 0 10px;border:1px solid #ddd;border-radius:7px;outline:none}
+textarea.form-input{resize:none}
 
 /* REVIEW */
-.review-section{
-  background:white;
-  padding:25px 12px;
-  margin-top:15px;
-}
-
-.review-section h2{
-  text-align:center;
-  margin-bottom:18px;
-}
-
-.review-form{
-  background:#f5f5f5;
-  padding:15px;
-  border-radius:10px;
-  max-width:600px;
-  margin:auto;
-}
-
-.stars{
-  font-size:25px;
-  color:#ccc;
-  margin:7px 0;
-}
-
-.stars span{
-  cursor:pointer;
-}
-
-.stars .active{
-  color:#ffc107;
-}
-
-.review-card{
-  max-width:600px;
-  margin:12px auto;
-  border:1px solid #eee;
-  padding:13px;
-  border-radius:9px;
-}
-
-.review-card .name{
-  font-weight:bold;
-}
-
-.review-card .star{
-  color:#ffc107;
-}
-
-.review-date{
-  font-size:11px;
-  color:#999;
-  margin-top:5px;
-}
+.review-section{background:white;padding:25px 12px;margin-top:15px}
+.review-section h2{text-align:center;margin-bottom:18px}
+.review-form{background:#f5f5f5;padding:15px;border-radius:10px;max-width:600px;margin:auto}
+.stars{font-size:25px;color:#ccc;margin:7px 0}
+.stars span{cursor:pointer;display:inline-block}
+.stars .active{color:#ffc107}
+.review-card{max-width:600px;margin:12px auto;border:1px solid #eee;padding:13px;border-radius:9px}
+.review-card .name{font-weight:bold}
+.review-card .star{color:#ffc107}
+.review-date{font-size:11px;color:#999;margin-top:5px}
 
 /* FOOTER */
-footer{
-  background:#111;
-  color:white;
-  text-align:center;
-  padding:25px 10px;
-  margin-top:20px;
-}
+footer{background:#111;color:white;text-align:center;padding:25px 10px;margin-top:20px}
+footer p{margin:5px;font-size:13px}
+.whatsapp{display:inline-block;background:#25D366;color:white;padding:10px 16px;border-radius:20px;margin-top:10px;text-decoration:none;font-weight:bold}
 
-footer p{
-  margin:5px;
-  font-size:13px;
-}
-
-.whatsapp{
-  display:inline-block;
-  background:#25D366;
-  color:white;
-  padding:10px 16px;
-  border-radius:20px;
-  margin-top:10px;
-  text-decoration:none;
-  font-weight:bold;
-}
+/* TOAST */
+.toast-container{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:9999}
+.toast{background:rgba(0,0,0,.85);color:white;padding:10px 14px;border-radius:8px;margin-top:8px;box-shadow:0 6px 18px rgba(0,0,0,.25);font-size:14px;max-width:90vw;word-break:break-word}
 
 /* DESKTOP */
 @media(min-width:700px){
-  .products{
-    grid-template-columns:repeat(4,1fr);
-    max-width:1200px;
-    margin:auto;
-  }
-
-  .banner{
-    max-width:1200px;
-    margin:15px auto;
-  }
+  .products{grid-template-columns:repeat(4,1fr);max-width:1200px;margin:auto}
+  .banner{max-width:1200px;margin:15px auto}
 }
 </style>
 </head>
-
 <body>
 
 <!-- HEADER -->
 <header>
   <div class="top-bar">
-
     <div class="logo">
       <h1>RAYZO</h1>
       <p>প্রতিদিনের প্রয়োজন এক জায়গায়</p>
     </div>
-
-    <button class="cart-icon" onclick="toggleCart()" aria-label="Open cart">
+    <button id="openCartBtn" class="cart-icon" aria-label="Open cart" aria-controls="cart" aria-expanded="false">
       🛒
       <span id="cart-count">0</span>
     </button>
-
   </div>
 </header>
 
-
 <!-- SEARCH -->
 <div class="search-bar">
-  <input
-    type="text"
-    id="searchInput"
-    onkeyup="searchProduct()"
-    placeholder="🔎 Product search করুন..."
-    aria-label="Search products"
-  >
+  <input type="text" id="searchInput" placeholder="🔎 Product search করুন..." aria-label="Search products">
 </div>
-
 
 <!-- BANNER -->
 <div class="banner">
@@ -469,322 +128,113 @@ footer p{
   <p>Quality Products • Affordable Price • Cash on Delivery</p>
 </div>
 
-
 <!-- CATEGORY -->
-<div class="category" id="category-list"></div>
-
+<div class="category" id="category-list" aria-label="Categories"></div>
 
 <!-- PRODUCTS -->
-<div class="products" id="product-list" role="list"></div>
-
+<div class="products" id="product-list" role="list" aria-label="Product list"></div>
 
 <!-- REVIEW -->
 <section class="review-section">
-
   <h2>⭐ Customer Review</h2>
-
-  <div class="review-form">
-
-    <h4>আপনার মতামত দিন</h4>
-
-    <input
-      type="text"
-      id="revName"
-      class="form-input"
-      placeholder="আপনার নাম"
-      aria-label="Your name"
-    >
-
-    <div class="stars" id="starRating">
-
-      <span onclick="setStar(1)" role="button" tabindex="0">★</span>
-      <span onclick="setStar(2)" role="button" tabindex="0">★</span>
-      <span onclick="setStar(3)" role="button" tabindex="0">★</span>
-      <span onclick="setStar(4)" role="button" tabindex="0">★</span>
-      <span onclick="setStar(5)" role="button" tabindex="0">★</span>
-
+  <div class="review-form" aria-labelledby="review-form-title">
+    <h4 id="review-form-title">আপনার মতামত দিন</h4>
+    <input type="text" id="revName" class="form-input" placeholder="আপনার নাম" aria-label="Your name">
+    <div class="stars" id="starRating" role="radiogroup" aria-label="Star rating">
+      <span data-star="1" role="radio" aria-checked="false" tabindex="0">★</span>
+      <span data-star="2" role="radio" aria-checked="false" tabindex="0">★</span>
+      <span data-star="3" role="radio" aria-checked="false" tabindex="0">★</span>
+      <span data-star="4" role="radio" aria-checked="false" tabindex="0">★</span>
+      <span data-star="5" role="radio" aria-checked="false" tabindex="0">★</span>
     </div>
-
-    <textarea
-      id="revComment"
-      class="form-input"
-      rows="3"
-      placeholder="Product কেমন লাগলো লিখুন..."
-      aria-label="Review comment"
-    ></textarea>
-
-    <button class="btn" onclick="addReview()" aria-label="Submit review">
-      Review Submit
-    </button>
-
+    <textarea id="revComment" class="form-input" rows="3" placeholder="Product কেমন লাগলো লিখুন..." aria-label="Review comment"></textarea>
+    <button class="btn" id="submitReviewBtn" aria-label="Submit review">Review Submit</button>
   </div>
-
-  <div id="reviewList"></div>
-
+  <div id="reviewList" aria-live="polite" style="margin-top:12px"></div>
 </section>
 
-
 <!-- OVERLAY -->
-<div
-  class="overlay"
-  onclick="toggleCart()">
-</div>
-
+<div class="overlay" id="cartOverlay" tabindex="-1" aria-hidden="true"></div>
 
 <!-- CART -->
-<div class="cart-sidebar" id="cart" role="complementary" aria-label="Shopping cart">
-
+<aside class="cart-sidebar" id="cart" role="complementary" aria-label="Shopping cart" aria-hidden="true">
   <div class="cart-header">
-
     <h2>🛒 Your Cart</h2>
-
-    <span
-      class="close-cart"
-      onclick="toggleCart()"
-      role="button"
-      aria-label="Close cart">
-      ×
-    </span>
-
+    <button class="close-cart" id="closeCartBtn" aria-label="Close cart">×</button>
   </div>
-
   <div id="cart-items"></div>
-
   <div class="cart-total">
-
-    <div class="total-row">
-      <span>Subtotal</span>
-      <b>৳ <span id="subtotal">0</span></b>
-    </div>
-
-    <div class="total-row">
-      <span>Delivery</span>
-      <b>৳ <span id="delivery">0</span></b>
-    </div>
-
-    <div class="total-row">
-      <strong>Total</strong>
-      <strong>৳ <span id="total">0</span></strong>
-    </div>
-
-    <button
-      class="btn"
-      onclick="openOrderForm()"
-      aria-label="Open order form">
-      📦 Order Now
-    </button>
-
+    <div class="total-row"><span>Subtotal</span><b>৳ <span id="subtotal">0</span></b></div>
+    <div class="total-row"><span>Delivery</span><b>৳ <span id="delivery">0</span></b></div>
+    <div class="total-row"><strong>Total</strong><strong>৳ <span id="total">0</span></strong></div>
+    <button class="btn" id="orderNowBtn" aria-label="Open order form">📦 Order Now</button>
   </div>
-
-</div>
-
+</aside>
 
 <!-- ORDER MODAL -->
-<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-
+<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle" aria-hidden="true">
   <div class="modal-content" id="orderContent" tabindex="-1">
-
     <div class="modal-header">
-
       <h2 id="orderTitle">📦 Order Details</h2>
-
-      <span onclick="closeOrderForm()" role="button" aria-label="Close order form">×</span>
-
+      <button id="closeOrderBtn" aria-label="Close order form">×</button>
     </div>
 
-    <label>আপনার নাম</label>
+    <label for="customerName">আপনার নাম</label>
+    <input id="customerName" class="form-input" type="text" placeholder="আপনার নাম" aria-label="Customer name">
 
-    <input
-      id="customerName"
-      class="form-input"
-      type="text"
-      placeholder="আপনার নাম"
-      aria-label="Customer name"
-    >
+    <label for="customerPhone">মোবাইল নম্বর</label>
+    <input id="customerPhone" class="form-input" type="tel" placeholder="01XXXXXXXXX" aria-label="Customer phone" maxlength="11" pattern="01[0-9]{9}">
 
-    <label>মোবাইল নম্বর</label>
+    <label for="customerAddress">ঠিকানা</label>
+    <textarea id="customerAddress" class="form-input" rows="3" placeholder="সম্পূর্ণ ঠিকানা লিখুন" aria-label="Customer address"></textarea>
 
-    <input
-      id="customerPhone"
-      class="form-input"
-      type="tel"
-      placeholder="01XXXXXXXXX"
-      aria-label="Customer phone"
-    >
-
-    <label>ঠিকানা</label>
-
-    <textarea
-      id="customerAddress"
-      class="form-input"
-      rows="3"
-      placeholder="সম্পূর্ণ ঠিকানা লিখুন"
-      aria-label="Customer address"
-    ></textarea>
-
-    <label>Delivery Area</label>
-
-    <select
-      id="deliveryArea"
-      class="form-input"
-      onchange="calculateDelivery()"
-      aria-label="Delivery area">
-
-      <option value="dhaka">
-        Dhaka - ৳60
-      </option>
-
-      <option value="outside">
-        Outside Dhaka - ৳120
-      </option>
-
+    <label for="deliveryArea">Delivery Area</label>
+    <select id="deliveryArea" class="form-input" onchange="calculateDelivery()" aria-label="Delivery area">
+      <option value="dhaka">Dhaka - ৳60</option>
+      <option value="outside">Outside Dhaka - ৳120</option>
     </select>
 
-    <p style="margin:10px 0;font-size:13px;">
-      Payment Method: <b>Cash on Delivery</b>
-    </p>
+    <p style="margin:10px 0;font-size:13px;">Payment Method: <b>Cash on Delivery</b></p>
 
-    <button
-      class="btn"
-      onclick="sendWhatsAppOrder()"
-      aria-label="Order via WhatsApp">
-
-      📱 Order via WhatsApp
-
-    </button>
-
+    <button class="btn" id="whatsappOrderBtn" aria-label="Order via WhatsApp">📱 Order via WhatsApp</button>
   </div>
-
 </div>
-
 
 <!-- FOOTER -->
 <footer>
-
   <p><b style="font-size:20px;">RAYZO</b></p>
-
   <p>প্রতিদিনের প্রয়োজন এক জায়গায়</p>
-
   <p>📦 Cash on Delivery Available</p>
-
   <p>📱 WhatsApp: 01747124827</p>
-
-  <a
-    class="whatsapp"
-    href="https://wa.me/8801747124827"
-    target="_blank"
-    rel="noopener noreferrer">
-
-    💬 WhatsApp Us
-
-  </a>
-
-  <p style="margin-top:15px;">
-    © 2026 RAYZO. All Rights Reserved.
-  </p>
-
+  <a class="whatsapp" href="https://wa.me/8801747124827" target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
+  <p style="margin-top:15px;">© 2026 RAYZO. All Rights Reserved.</p>
 </footer>
 
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
 <script>
-
 /* ==========================================
-   RAYZO PRODUCTS
+   DATA
 ========================================== */
 
 const products = [
-
-  {
-    id:1,
-    name:"Kitchen Organizer",
-    category:"Kitchen",
-    price:350,
-    oldPrice:450,
-    image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
-    description:"Kitchen সুন্দর ও গোছানো রাখতে সাহায্য করবে।"
-  },
-
-  {
-    id:2,
-    name:"AirPods Pro Style",
-    category:"Electronics",
-    price:899,
-    oldPrice:1200,
-    image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=600&q=80",
-    description:"Stylish wireless earbuds."
-  },
-
-  {
-    id:3,
-    name:"Smart Watch",
-    category:"Electronics",
-    price:1250,
-    oldPrice:1600,
-    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
-    description:"Modern smart watch."
-  },
-
-  {
-    id:4,
-    name:"LED Night Light",
-    category:"Home",
-    price:299,
-    oldPrice:399,
-    image:"https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=600&q=80",
-    description:"ঘরের জন্য সুন্দর LED light."
-  },
-
-  {
-    id:5,
-    name:"Mobile Stand",
-    category:"Accessories",
-    price:199,
-    oldPrice:299,
-    image:"https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=600&q=80",
-    description:"Mobile রাখার জন্য handy stand."
-  },
-
-  {
-    id:6,
-    name:"Water Bottle",
-    category:"Lifestyle",
-    price:299,
-    oldPrice:399,
-    image:"https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=80",
-    description:"Daily use water bottle."
-  },
-
-  {
-    id:7,
-    name:"Storage Box",
-    category:"Home",
-    price:450,
-    oldPrice:550,
-    image:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80",
-    description:"ঘর গোছানোর জন্য storage box."
-  },
-
-  {
-    id:8,
-    name:"Mini Portable Fan",
-    category:"Electronics",
-    price:499,
-    oldPrice:650,
-    image:"https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80",
-    description:"Portable rechargeable fan."
-  }
-
+  {id:1,name:"Kitchen Organizer",category:"Kitchen",price:350,oldPrice:450,image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",description:"Kitchen সুন্দর ও গোছানো রাখতে সাহায্য করবে।"},
+  {id:2,name:"AirPods Pro Style",category:"Electronics",price:899,oldPrice:1200,image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=600&q=80",description:"Stylish wireless earbuds."},
+  {id:3,name:"Smart Watch",category:"Electronics",price:1250,oldPrice:1600,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",description:"Modern smart watch."},
+  {id:4,name:"LED Night Light",category:"Home",price:299,oldPrice:399,image:"https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=600&q=80",description:"ঘরের জন্য সুন্দর LED light."},
+  {id:5,name:"Mobile Stand",category:"Accessories",price:199,oldPrice:299,image:"https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=600&q=80",description:"Mobile রাখার জন্য handy stand."},
+  {id:6,name:"Water Bottle",category:"Lifestyle",price:299,oldPrice:399,image:"https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=80",description:"Daily use water bottle."},
+  {id:7,name:"Storage Box",category:"Home",price:450,oldPrice:550,image:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80",description:"ঘর গোছানোর জন্য storage box."},
+  {id:8,name:"Mini Portable Fan",category:"Electronics",price:499,oldPrice:650,image:"https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80",description:"Portable rechargeable fan."}
 ];
 
-
 /* ==========================================
-   VARIABLES
+   STATE
 ========================================== */
 
 let cart = [];
-
 let selectedStar = 0;
-
 let lastFocusedElement = null;
 
 function safeParse(key, fallback){
@@ -800,159 +250,77 @@ function safeParse(key, fallback){
 
 let reviews = safeParse('rayzoReviews', []);
 
+/* ==========================================
+   HELPERS: Toast, escape
+========================================== */
+
+function showToast(message, timeout = 1800){
+  const container = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = message;
+  container.appendChild(t);
+  setTimeout(()=> {
+    t.classList.add('removing');
+    setTimeout(()=> container.removeChild(t), 220);
+  }, timeout);
+}
+
+function escapeHTML(text){
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/\"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
 /* ==========================================
-   SHOW CATEGORIES
+   CATEGORIES & PRODUCTS
 ========================================== */
 
 function showCategories(){
-
-  let categories = [
-    "All",
-    ...new Set(products.map(p => p.category))
-  ];
-
+  let categories = ["All", ...new Set(products.map(p => p.category))];
   let html = "";
-
   categories.forEach((cat,index)=>{
-
-    html += `
-      <div
-        class="cat-item ${index===0?"active":""}"
-        onclick="filterCat('${cat}',this)"
-        role="button"
-        tabindex="0">
-        ${cat}
-      </div>
-    `;
-
+    html += `<div class="cat-item ${index===0?"active":""}" data-cat="${escapeHTML(cat)}" role="button" tabindex="0">${escapeHTML(cat)}</div>`;
   });
-
   document.getElementById("category-list").innerHTML = html;
-
 }
 
-
-/* ==========================================
-   SHOW PRODUCTS
-========================================== */
-
-function showProducts(list=products){
-
-  let container =
-  document.getElementById("product-list");
-
-  if(list.length===0){
-
-    container.innerHTML =
-    "<p style='grid-column:1/-1;text-align:center;padding:30px;color:#777;'>কোনো product পাওয়া যায়নি 😔</p>";
-
+function showProducts(list = products){
+  const container = document.getElementById("product-list");
+  if(!list || list.length === 0){
+    container.innerHTML = "<p style='grid-column:1/-1;text-align:center;padding:30px;color:#777;'>কোনো product পাওয়া যায়নি 😔</p>";
     return;
   }
-
   container.innerHTML = "";
-
   list.forEach(product=>{
-
-    container.innerHTML += `
-
-      <div class="card" role="listitem">
-
-        <img
-          src="${product.image}"
-          alt="${product.name}"
-          loading="lazy"
-        >
-
-        <h3>${product.name}</h3>
-
-        <p>${product.description}</p>
-
-        <div class="price">
-
-          ৳${product.price}
-
-          <span class="old-price">
-            ৳${product.oldPrice}
-          </span>
-
-        </div>
-
-        <button
-          class="btn"
-          onclick="addToCart(${product.id})"
-          aria-label="Add ${product.name} to cart">
-
-          🛒 Add to Cart
-
-        </button>
-
-      </div>
-
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.setAttribute('role','listitem');
+    card.innerHTML = `
+      <img src="${product.image}" alt="${escapeHTML(product.name)}" loading="lazy">
+      <h3>${escapeHTML(product.name)}</h3>
+      <p>${escapeHTML(product.description)}</p>
+      <div class="price">৳${product.price}<span class="old-price">৳${product.oldPrice}</span></div>
+      <button class="btn add-to-cart" data-id="${product.id}" aria-label="Add ${escapeHTML(product.name)} to cart">🛒 Add to Cart</button>
     `;
-
+    container.appendChild(card);
   });
-
 }
 
-
 /* ==========================================
-   CATEGORY FILTER
+   CATEGORY FILTER & SEARCH (with debounce)
 ========================================== */
 
-function filterCat(category,el){
-
-  document
-  .querySelectorAll(".cat-item")
-  .forEach(item =>
-    item.classList.remove("active")
-  );
-
-  el.classList.add("active");
-
-  if(category==="All"){
-
-    showProducts(products);
-
-  }else{
-
-    showProducts(
-      products.filter(
-        p => p.category===category
-      )
-    );
-
-  }
-
-}
-
-
-/* ==========================================
-   SEARCH
-========================================== */
-
-function searchProduct(){
-
-  let search =
-  document
-  .getElementById("searchInput")
-  .value
-  .toLowerCase()
-  .trim();
-
-  let result =
-  products.filter(p =>
-    p.name.toLowerCase().includes(search) ||
-    p.category.toLowerCase().includes(search)
-  );
-
-  showProducts(result);
-
+function filterCat(category){
+  if(category === "All") return showProducts(products);
+  showProducts(products.filter(p => p.category === category));
 }
 
 let searchTimer;
-
-window.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', ()=>{
   const searchInput = document.getElementById('searchInput');
   if(searchInput){
     searchInput.addEventListener('input', ()=>{
@@ -960,51 +328,365 @@ window.addEventListener('DOMContentLoaded', ()=>{
       searchTimer = setTimeout(searchProduct, 220);
     });
   }
+
+  // category click (event delegation)
+  document.getElementById('category-list').addEventListener('click', (e) => {
+    const el = e.target.closest('.cat-item');
+    if(!el) return;
+    document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    filterCat(el.dataset.cat);
+  });
+
+  // also keyboard support for categories
+  document.getElementById('category-list').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.target.click();
+    }
+  });
+
+  // add-to-cart delegation
+  document.getElementById('product-list').addEventListener('click', (e) => {
+    const btn = e.target.closest('.add-to-cart');
+    if(!btn) return;
+    const id = Number(btn.dataset.id);
+    addToCart(id);
+  });
+
+  // init star keyboard handlers
+  document.querySelectorAll('#starRating span').forEach(span => {
+    span.addEventListener('keydown', (ev) => {
+      if(ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        const n = Number(span.dataset.star);
+        setStar(n);
+      }
+    });
+  });
+
 });
 
+/* ==========================================
+   SEARCH
+========================================== */
+
+function searchProduct(){
+  const q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+  const result = products.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.category.toLowerCase().includes(q)
+  );
+  showProducts(result);
+}
 
 /* ==========================================
-   ADD TO CART
+   CART: add / update / save / remove
 ========================================== */
 
 function addToCart(id){
-
-  let product =
-  products.find(p=>p.id===id);
-
-  let existing =
-  cart.find(item=>item.id===id);
-
-  if(existing){
-
-    existing.qty++;
-
-  }else{
-
-    cart.push({
-      ...product,
-      qty:1
-    });
-
-  }
-
+  const product = products.find(p => p.id === id);
+  if(!product) return showToast("Product পাওয়া যায়নি");
+  const existing = cart.find(item => item.id === id);
+  if(existing) existing.qty++;
+  else cart.push({...product, qty: 1});
   saveCart();
-
   updateCart();
-
-  // non-blocking toast would be better; keep alert for now
-  alert(product.name + " cart এ যোগ হয়েছে ✅");
-
+  showToast(product.name + " cart এ যোগ হয়েছে ✅");
 }
 
+function updateCart(){
+  const container = document.getElementById("cart-items");
+  document.getElementById("cart-count").innerText = cart.reduce((sum,item)=>sum+item.qty, 0);
+  if(cart.length === 0){
+    container.innerHTML = "<p style='text-align:center;color:#777;padding:30px;'>Cart এখন খালি 🛒</p>";
+    document.getElementById("subtotal").innerText = 0;
+    // compute default delivery
+    const deliveryArea = document.getElementById('deliveryArea');
+    const deliveryDefault = deliveryArea && deliveryArea.value === 'outside' ? 120 : 60;
+    document.getElementById("delivery").innerText = deliveryDefault;
+    document.getElementById("total").innerText = 0;
+    return;
+  }
+  container.innerHTML = "";
+  let subtotal = 0;
+  cart.forEach(item=>{
+    subtotal += item.price * item.qty;
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <img src="${item.image}" alt="${escapeHTML(item.name)}">
+      <div class="cart-info">
+        <h4>${escapeHTML(item.name)}</h4>
+        <p>৳${item.price}</p>
+        <div class="qty">
+          <button class="qty-decrease" data-id="${item.id}" aria-label="Decrease quantity">−</button>
+          <b>${item.qty}</b>
+          <button class="qty-increase" data-id="${item.id}" aria-label="Increase quantity">+</button>
+          <button class="remove-item" data-id="${item.id}" style="margin-left:auto;color:red;" aria-label="Remove ${escapeHTML(item.name)} from cart">🗑️</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
 
-// Initialize UI
-showCategories();
-showProducts();
-updateCart();
-renderReviews();
+  document.getElementById("subtotal").innerText = subtotal;
+  const deliveryArea = document.getElementById('deliveryArea');
+  const delivery = deliveryArea && deliveryArea.value === 'outside' ? 120 : 60;
+  document.getElementById("delivery").innerText = delivery;
+  document.getElementById("total").innerText = subtotal + delivery;
 
+  // attach quantity & remove handlers via delegation
+  container.querySelectorAll('.qty-decrease').forEach(btn=>{
+    btn.addEventListener('click', ()=>changeQty(Number(btn.dataset.id), -1));
+  });
+  container.querySelectorAll('.qty-increase').forEach(btn=>{
+    btn.addEventListener('click', ()=>changeQty(Number(btn.dataset.id), +1));
+  });
+  container.querySelectorAll('.remove-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>removeFromCart(Number(btn.dataset.id)));
+  });
+}
+
+function changeQty(id, amount){
+  const item = cart.find(p=>p.id===id);
+  if(!item) return;
+  item.qty += amount;
+  if(item.qty <= 0) cart = cart.filter(p=>p.id !== id);
+  saveCart();
+  updateCart();
+}
+
+function removeFromCart(id){
+  cart = cart.filter(item => item.id !== id);
+  saveCart();
+  updateCart();
+}
+
+function saveCart(){
+  try{ localStorage.setItem('rayzoCart', JSON.stringify(cart)); }
+  catch(e){ console.warn('Failed saving cart', e); }
+}
+
+/* ==========================================
+   CART / MODAL OPEN/CLOSE + ACCESSIBILITY
+========================================== */
+
+const cartEl = document.getElementById('cart');
+const overlay = document.getElementById('cartOverlay');
+const openCartBtn = document.getElementById('openCartBtn');
+const closeCartBtn = document.getElementById('closeCartBtn');
+const orderNowBtn = document.getElementById('orderNowBtn');
+const orderModal = document.getElementById('orderModal');
+const orderContent = document.getElementById('orderContent');
+const closeOrderBtn = document.getElementById('closeOrderBtn');
+const whatsappOrderBtn = document.getElementById('whatsappOrderBtn');
+
+openCartBtn.addEventListener('click', toggleCart);
+closeCartBtn.addEventListener('click', toggleCart);
+overlay.addEventListener('click', toggleCart);
+
+// keyboard: close on Escape
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    if(cartEl.classList.contains('open')) toggleCart();
+    if(orderModal.classList.contains('show')) closeOrderForm();
+  }
+});
+
+// simple focus trap helper
+function trapFocus(container){
+  const focusables = container.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+  if(!focusables.length) return () => {};
+  let first = focusables[0], last = focusables[focusables.length - 1];
+  function handle(e){
+    if(e.key !== 'Tab') return;
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+  container.addEventListener('keydown', handle);
+  // return cleanup fn
+  return () => container.removeEventListener('keydown', handle);
+}
+
+let untrapCart = null;
+function toggleCart(){
+  const isOpen = cartEl.classList.contains('open');
+  if(!isOpen){
+    lastFocusedElement = document.activeElement;
+    cartEl.classList.add('open');
+    overlay.classList.add('show');
+    cartEl.setAttribute('aria-hidden', 'false');
+    overlay.setAttribute('aria-hidden', 'false');
+    openCartBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('no-scroll');
+    // focus cart
+    cartEl.setAttribute('tabindex','-1');
+    setTimeout(()=> cartEl.focus(), 50);
+    untrapCart = trapFocus(cartEl);
+  } else {
+    cartEl.classList.remove('open');
+    overlay.classList.remove('show');
+    cartEl.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('aria-hidden', 'true');
+    openCartBtn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+    if(untrapCart) untrapCart();
+    if(lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
+  }
+}
+
+orderNowBtn.addEventListener('click', openOrderForm);
+closeOrderBtn.addEventListener('click', closeOrderForm);
+
+let untrapModal = null;
+function openOrderForm(){
+  if(cart.length === 0){
+    return showToast("আগে cart এ product যোগ করুন 🛒");
+  }
+  lastFocusedElement = document.activeElement;
+  orderModal.classList.add('show');
+  orderModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('no-scroll');
+  setTimeout(()=> orderContent.focus(), 50);
+  untrapModal = trapFocus(orderContent);
+}
+
+function closeOrderForm(){
+  orderModal.classList.remove('show');
+  orderModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('no-scroll');
+  if(untrapModal) untrapModal();
+  if(lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
+}
+
+/* ==========================================
+   DELIVERY calc & WHATSAPP ORDER
+========================================== */
+
+function calculateDelivery(){
+  const subtotal = cart.reduce((sum,item)=> sum + item.price*item.qty, 0);
+  const areaEl = document.getElementById('deliveryArea');
+  const delivery = areaEl && areaEl.value === 'outside' ? 120 : 60;
+  document.getElementById('delivery').innerText = delivery;
+  document.getElementById('total').innerText = subtotal + delivery;
+}
+
+whatsappOrderBtn.addEventListener('click', sendWhatsAppOrder);
+
+function sendWhatsAppOrder(){
+  const name = (document.getElementById('customerName').value || '').trim();
+  const phone = (document.getElementById('customerPhone').value || '').trim();
+  const address = (document.getElementById('customerAddress').value || '').trim();
+  const area = document.getElementById('deliveryArea').value;
+  const phonePattern = /^01[0-9]{9}$/;
+
+  if(!name || !phone || !address){
+    return showToast("সব তথ্য পূরণ করুন ❗");
+  }
+  if(!phonePattern.test(phone)){
+    return showToast("সঠিক মোবাইল নম্বর দিন (01XXXXXXXXX)");
+  }
+  if(cart.length === 0){
+    return showToast("Cart খালি!");
+  }
+
+  const subtotal = cart.reduce((sum,item)=> sum + item.price*item.qty, 0);
+  const delivery = area === "dhaka" ? 60 : 120;
+  const total = subtotal + delivery;
+
+  let message = `🛍️ RAYZO NEW ORDER
+
+👤 Customer:
+${name}
+
+📱 Phone:
+${phone}
+
+📍 Address:
+${address}
+
+🚚 Delivery:
+${area === "dhaka" ? "Dhaka" : "Outside Dhaka"}
+
+🛒 Products:
+`;
+
+  cart.forEach(item=>{
+    message += `\n• ${item.name}\n  Qty: ${item.qty}\n  Price: ৳${item.price * item.qty}\n`;
+  });
+
+  message += `\n💰 Subtotal: ৳${subtotal}\n🚚 Delivery: ৳${delivery}\n💵 Total: ৳${total}\n\n💳 Payment: Cash on Delivery\n\nThank you for shopping with RAYZO ❤️`;
+
+  const whatsappNumber = "8801747124827";
+  const url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+
+  showToast("Opening WhatsApp...");
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+/* ==========================================
+   REVIEWS (with localStorage)
+========================================== */
+
+function setStar(num){
+  selectedStar = num;
+  document.querySelectorAll("#starRating span").forEach((star)=> {
+    const n = Number(star.dataset.star);
+    star.classList.toggle('active', n <= num);
+    star.setAttribute('aria-checked', n === num ? 'true' : 'false');
+  });
+}
+
+document.getElementById('submitReviewBtn').addEventListener('click', addReview);
+
+function addReview(){
+  const name = (document.getElementById('revName').value || '').trim();
+  const comment = (document.getElementById('revComment').value || '').trim();
+  if(!name || !comment || selectedStar === 0){
+    return showToast("নাম, Star এবং Comment দিন ⭐");
+  }
+  const review = {name, star: selectedStar, comment, date: new Date().toLocaleDateString("bn-BD")};
+  reviews.unshift(review);
+  localStorage.setItem('rayzoReviews', JSON.stringify(reviews));
+  displayReviews();
+  document.getElementById('revName').value = '';
+  document.getElementById('revComment').value = '';
+  setStar(0);
+  showToast("ধন্যবাদ! আপনার review submit হয়েছে ❤️");
+}
+
+function displayReviews(){
+  const list = document.getElementById('reviewList');
+  if(!reviews || reviews.length === 0){
+    list.innerHTML = "<p style='text-align:center;color:gray;margin-top:20px;'>এখনো কোনো review নেই</p>";
+    return;
+  }
+  list.innerHTML = "";
+  reviews.forEach(review => {
+    const stars = "★".repeat(review.star) + "☆".repeat(5 - review.star);
+    const div = document.createElement('div');
+    div.className = 'review-card';
+    div.innerHTML = `
+      <p class="name">${escapeHTML(review.name)} <span class="star">${stars}</span></p>
+      <p style="margin-top:5px;">${escapeHTML(review.comment)}</p>
+      <p class="review-date">${escapeHTML(review.date)}</p>
+    `;
+    list.appendChild(div);
+  });
+}
+
+/* ==========================================
+   PAGE LOAD
+========================================== */
+
+window.onload = function(){
+  cart = safeParse('rayzoCart', []);
+  showCategories();
+  showProducts();
+  updateCart();
+  displayReviews();
+};
 </script>
-
 </body>
 </html>
