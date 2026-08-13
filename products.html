@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <title>Products - RAYZO</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Arial, sans-serif; padding:20px; background:#f7f7f7}
+    .container{max-width:1000px;margin:0 auto}
+    h1{color:#222;text-align:center}
+    .product{background:#fff;border:1px solid #ddd;padding:16px;border-radius:8px;display:flex;gap:16px;align-items:center;margin:20px 0}
+    .product img{width:300px;max-width:40%;height:auto;border-radius:6px;object-fit:cover}
+    .meta{flex:1}
+    .name{font-size:1.4rem;margin-top:0}
+    .price{color:#e53935;font-weight:700;margin-top:6px;font-size:1.2rem}
+    .desc{color:#555;margin-top:8px}
+    .buy{display:inline-block;margin-top:12px;padding:10px 16px;background:#00897b;color:#fff;border-radius:6px;text-decoration:none}
+    @media(max-width:700px){.product{flex-direction:column}.product img{max-width:100%;width:100%}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Products — RAYZO</h1>
+    <div id="list"></div>
+  </div>
+
+  <script>
+    fetch('products.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('list');
+        data.forEach(p => {
+          const el = document.createElement('div');
+          el.className = 'product';
+          el.innerHTML = `
+            <img src="${p.image}" alt="${p.name}">
+            <div class="meta">
+              <div class="name">${p.name}</div>
+              <div class="price">৳ ${p.price}</div>
+              <div class="desc">${p.description}</div>
+              <a class="buy" href="#">Buy Now</a>
+            </div>
+          `;
+          container.appendChild(el);
+        });
+      })
+      .catch(err => {
+        document.getElementById('list').innerText = 'প্রোডাক্ট লোড করতে সমস্যা হয়েছে।';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
